@@ -7,8 +7,8 @@ type FlashcardProps ={
 };
 export function Flashcard ({card}:FlashcardProps){
     return <div>
-        <div>
-            <h2 className="border rounded-lg p-8 text-4xl bg-blue-400 text-gray-900 cursor-pointer">{card.english}</h2>
+        <div className="rounded-2xl bg-amber-100 p-6 text-center shadow-md sm:p-10">
+            <h2 className="text-3xl font-bold text-gray-900 sm:text-5xl">{card.english}</h2>
         </div>
         {card.example&&(
             <p className="mt-4">Example: {card.example}</p>

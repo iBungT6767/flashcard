@@ -21,7 +21,7 @@ export function QuizGame(){
                 <p className="mt-2">
                     ถูก {correctCount} จาก {records.length} ข้อ ({percent}%)
                 </p>
-                <button type="button" className="w-full border rounded-lg p-4 text-left" onClick={restart}>เริ่มใหม่</button>
+                <button type="button" className="mt-4 border rounded-lg bg-white px-4 py-2 transition hover:bg-gray-100 active:scale-95" onClick={restart}>เริ่มใหม่</button>
             </div>
         );
     }
@@ -30,9 +30,9 @@ export function QuizGame(){
         <div className="mx-auto max-w-md p-4">
             <QuestionCard question={currentQuestion}/>
             {selectedId !== null && (
-                <RatingButton onRate={(rating) => submitRating(rating,currentQuestion)}/>
+                <div className="mt-4"><RatingButton onRate={(rating) => submitRating(rating,currentQuestion)}/></div>
             )}
-            <p>ข้อที่ {currentIndex+1}/{questions.length}</p>
+            <p className="mt-4 text-center text-sm text-gray-500">ข้อที่ {currentIndex+1}/{questions.length}</p>
         </div>
     )
 }
