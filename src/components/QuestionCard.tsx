@@ -1,8 +1,8 @@
 "use client";
-import type { Question } from "../types/index";
+import type { Question } from "@/types/index";
 import  { Flashcard } from "./Flashcard";
 import { ChoiceButton } from "./ChoiceButton";
-import { useQuizStore } from "../store/quizStore";
+import { useQuizStore } from "@/store/quizStore";
 
 
 type QuestionCardProps ={

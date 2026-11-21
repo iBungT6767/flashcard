@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { AnswerRecord,Question,Rating } from "../types/index";
+import type { AnswerRecord,Question,Rating } from "@/types/index";
 
 type QuizState = {
     currentIndex: number;

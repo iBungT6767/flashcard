@@ -1,6 +1,6 @@
 "use client"
-import type { Rating } from "../types";
-import { RATINGS } from "../types";
+import type { Rating } from "@/types";
+import { RATINGS } from "@/types";
 
 type RatingButtonProps ={
     onRate:(rating:Rating) => void;
@@ -15,9 +15,10 @@ const ratingStyle:Record<Rating,string> ={
 
 export function RatingButton ({onRate}:RatingButtonProps){
     return(
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-            {RATINGS.map((rating) =>(
-                <button key={rating} type="button" onClick={() => onRate(rating)} className={`rounded-lg border px-4 py-3 text-sm font-medium transition active:scale-95 ${ratingStyle[rating]}`}>
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
+            {RATINGS.map((rating,index) =>(
+                <button key={rating} type="button" onClick={() => onRate(rating)} className={`rounded-lg border px-4 py-3 text-sm font-medium transition active:scale-95 
+                    ${index === RATINGS.length-1 ? "col-span-2 sm:col-span-1" : ""} ${ratingStyle[rating]}`}>
                     {rating}
                 </button>
             ))}
