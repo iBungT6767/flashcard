@@ -1,33 +1,30 @@
 "use client";
-import { questions } from "../data/questions";
+import { questions } from "@/data/questions";
 import { QuestionCard } from "./QuestionCard";
 import { RatingButton } from "./RatingButtons";
-import { useQuizStore } from "../store/quizStore";
+import { useQuizStore } from "@/store/quizStore";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { ProgressBar } from "./ProgressBar";
 
 export function QuizGame(){
     const currentIndex = useQuizStore((s) => s.currentIndex);
-    const records = useQuizStore((s) => s.records);
     const selectedId = useQuizStore((s) => s.selectedId);
     const submitRating = useQuizStore((s) => s.submitRating);
-    const restart = useQuizStore((s) => s.restart);
+    const router = useRouter();
 
-    if(currentIndex >= questions.length) {
-        const correctCount = records.filter((r) => r.isCorrect).length;
-        return(
-            <div className="mx-auto max-w-md p-4">
-                <h2 className="text-2xl font-bold">สรุปผล</h2>
-                <p className="mt-2">
-                    ถูก {correctCount} จาก {records.length} ข้อ
-                </p>
-                <ProgressBar current={correctCount} total={questions.length} />
-                <button type="button" className="mt-4 border rounded-lg bg-white px-4 py-2 transition hover:bg-gray-100 active:scale-95" onClick={restart}>เริ่มใหม่</button>
-            </div>
-        );
-    }
+    useEffect(() => {
+        if(currentIndex >= questions.length){
+            router.push("/summary");
+        }
+    },[currentIndex,router]);
+
+    if (currentIndex >= questions.length) return null;
+
     const currentQuestion = questions[currentIndex];
     return(
         <div className="mx-auto max-w-md p-4">
+            <ProgressBar current={currentIndex} total={questions.length} />
             <QuestionCard question={currentQuestion}/>
             {selectedId !== null && (
                 <div className="mt-4"><RatingButton onRate={(rating) => submitRating(rating,currentQuestion)}/></div>

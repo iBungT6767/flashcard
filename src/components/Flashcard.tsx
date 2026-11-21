@@ -1,4 +1,4 @@
-import type { Card } from "../types/index";
+import type { Card } from "@/types/index";
 
 
 type FlashcardProps ={

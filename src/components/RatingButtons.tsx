@@ -1,6 +1,6 @@
 "use client"
-import type { Rating } from "../types";
-import { RATINGS } from "../types";
+import type { Rating } from "@/types";
+import { RATINGS } from "@/types";
 
 type RatingButtonProps ={
     onRate:(rating:Rating) => void;

@@ -1,5 +1,5 @@
 "use client";
-import type { Choice } from "../types/index";
+import type { Choice } from "@/types/index";
 
 type ChoiceButtonProps ={
     choice:Choice;
