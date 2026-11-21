@@ -44,8 +44,38 @@ export const question3: Question ={
   ],
   correctChoiceId:3
 };
+export const question4: Question ={
+  id:4,
+  english:"remember",
+  thai:"จำได้",
+  difficulty:3,
+  choices:[
+    { id: 1, text: "ไข่" },
+    { id: 2, text: "ใบ้" },
+    { id: 3, text: "ไม่รู้" },
+    { id: 4, text: "ราคาถูก" },
+    { id: 5, text: "จำได้" },
+  ],
+  correctChoiceId:5
+};
+export const question5: Question ={
+  id:5,
+  english:"anxious",
+  thai:"กังวล",
+  difficulty:5,
+  choices:[
+    { id: 1, text: "ไข่" },
+    { id: 2, text: "ใบ้" },
+    { id: 3, text: "ป่วย" },
+    { id: 4, text: "กังวล" },
+    { id: 5, text: "จำได้" },
+  ],
+  correctChoiceId:4
+};
 export const questions:Question[]=[
   question1,
   question2,
-  question3
+  question3,
+  question4,
+  question5
 ];
