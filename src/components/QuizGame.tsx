@@ -3,7 +3,6 @@ import { questions } from "../data/questions";
 import { QuestionCard } from "./QuestionCard";
 import { RatingButton } from "./RatingButtons";
 import { useQuizStore } from "../store/quizStore";
-import { correctRatio } from "../lib/stats";
 import { ProgressBar } from "./ProgressBar";
 
 export function QuizGame(){
@@ -15,7 +14,6 @@ export function QuizGame(){
 
     if(currentIndex >= questions.length) {
         const correctCount = records.filter((r) => r.isCorrect).length;
-        const percent = Math.round(correctRatio(records) * 100);
         return(
             <div className="mx-auto max-w-md p-4">
                 <h2 className="text-2xl font-bold">สรุปผล</h2>

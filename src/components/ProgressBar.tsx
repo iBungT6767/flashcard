@@ -11,5 +11,5 @@ export function ProgressBar({current,total}:ProgressBarProps){
             </div>
             <p className="mt-1 text-right text-xs text-gray-500">{percent}%</p>
         </div>
-    )
+    );
 }

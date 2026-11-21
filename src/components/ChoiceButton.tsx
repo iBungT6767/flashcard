@@ -10,7 +10,7 @@ type ChoiceButtonProps ={
 };
 
 export function ChoiceButton({choice,onSelect,isCorrect,isWrong,disabled}:ChoiceButtonProps){
-    let buttonColor = "bg-white text-gray-900 enabled:hover:bg-gray-100";
+    let buttonColor = "bg-white text-gray-900 enabled:hover:bg-gray-100 transition enabled:active:scale-95";
     if (isCorrect) {
         buttonColor = "bg-green-500 text-white";
     }
