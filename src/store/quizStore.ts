@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import type { AnswerRecord,Question,Rating } from "@/types/index";
+import { persist } from "zustand/middleware";
 
 type QuizState = {
     currentIndex: number;
@@ -10,7 +11,9 @@ type QuizState = {
     restart:() => void;
 };
 
-export const useQuizStore = create<QuizState>()((set,get) => ({
+export const useQuizStore = create<QuizState>()(
+    persist(
+        (set,get) => ({
     currentIndex:0,
     records: [],
     selectedId:null,
@@ -33,4 +36,13 @@ export const useQuizStore = create<QuizState>()((set,get) => ({
     },
 
     restart:()=> set({currentIndex:0,records:[],selectedId:null}),
-}));
+}),
+{
+      name: "quiz-storage",
+      partialize:(state) => ({
+        records: state.records,
+        currentIndex: state.currentIndex,
+      }),
+    }
+  )
+);

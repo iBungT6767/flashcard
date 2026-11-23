@@ -4,11 +4,22 @@ import { useRouter } from "next/navigation"
 import { useQuizStore } from "@/store/quizStore"
 import { questions } from "@/data/questions"
 import { ProgressBar } from "./ProgressBar"
+import { useHydrated } from "@/hook/useHydrated"
+import { useEffect } from "react"
 
 export function SummaryView() {
+    const hydrated = useHydrated();
     const router = useRouter();
     const records = useQuizStore((s) => s.records);
     const restart = useQuizStore((s) => s.restart);
+
+    useEffect(() => {
+        if(hydrated && records.length === 0){
+            router.replace("/");
+        }
+    },[hydrated,records,router])
+
+    if(!hydrated || records.length === 0)return null;
 
     const correctCount = records.filter((r) => r.isCorrect).length;
     const handleAgain = () => {
