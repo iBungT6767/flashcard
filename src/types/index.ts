@@ -36,3 +36,8 @@ export type GameState = |{
 |{
   status:"finished"; score:number
 };
+export type QuestionLoadState = 
+| {status:"loading"}
+| {status:"error"}
+| {status:"ok";questions:Question[]};
+
