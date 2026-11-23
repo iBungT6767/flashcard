@@ -46,7 +46,7 @@ export const question3: Question ={
 };
 export const question4: Question ={
   id:4,
-  english:"remember",
+  english:"Remember",
   thai:"จำได้",
   difficulty:3,
   choices:[
@@ -60,7 +60,7 @@ export const question4: Question ={
 };
 export const question5: Question ={
   id:5,
-  english:"anxious",
+  english:"Anxious",
   thai:"กังวล",
   difficulty:5,
   choices:[
