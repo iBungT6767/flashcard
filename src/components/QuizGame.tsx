@@ -10,7 +10,10 @@ import { useHydrated } from "@/hook/useHydrated";
 import {createQuestions} from "@/lib/buildQuestions";
 
 export function QuizGame() {
-    const [questions, setQuestions] = useState<Question[]>([]);
+    const questions = useQuizStore((s) => s.questions);
+    const initializeQuestions = useQuizStore(
+        (s) => s.initializeQuestions
+    );
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const currentIndex = useQuizStore((s) => s.currentIndex);
@@ -19,37 +22,44 @@ export function QuizGame() {
     const router = useRouter();
     const hydrated = useHydrated();
     useEffect(() => {
-        let cancelled = false;
-        async function fetchCards() {
-            try {
-                const response = await fetch("/api/cards");
-                if (!response.ok) {
-                    throw new Error("ไม่สามารถดึงข้อมูลคำศัพท์ได้");
-                }
-                const data: Card[] = await response.json();
-                const generatedQuestions = createQuestions(data);
-                if(!cancelled){
-                    setQuestions(generatedQuestions);
-                }
-            } catch (error) {
-                if(!cancelled){
-                     setError(
-                    error instanceof Error
-                        ? error.message
-                        : "เกิดข้อผิดพลาด"
-                );
-                }
-            } finally {
-                if(!cancelled){
-                    setLoading(false);
-                }
-            }
+        if (!hydrated) return;
+        if (questions.length > 0) {
+            setLoading(false);
+            return;
         }
-        fetchCards();
-        return () => {
-            cancelled = true;
-        };
-    }, []);
+    let cancelled = false;
+    async function fetchCards() {
+    try {
+        setLoading(true);
+        setError(null);
+        const response = await fetch("/api/cards");
+        if (!response.ok) {
+            throw new Error("ไม่สามารถดึงข้อมูลคำศัพท์ได้");
+        }
+        const data: Card[] = await response.json();
+      const generatedQuestions = createQuestions(data);
+      if (!cancelled) {
+        initializeQuestions(generatedQuestions);
+      }
+    } catch (error) {
+        if (!cancelled) {
+            setError(
+            error instanceof Error
+            ? error.message
+            : "เกิดข้อผิดพลาด"
+            );
+        }
+    } finally {
+        if (!cancelled) {
+        setLoading(false);
+        }
+    }
+    }
+    fetchCards();
+    return () => {
+        cancelled = true;
+    };
+},  [hydrated, questions.length, initializeQuestions]);
     useEffect(() => {
         if (
             hydrated &&

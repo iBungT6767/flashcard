@@ -3,9 +3,12 @@ import type { AnswerRecord,Question,Rating } from "@/types/index";
 import { persist } from "zustand/middleware";
 
 type QuizState = {
+    questions:Question[];
     currentIndex: number;
     records:AnswerRecord[];
     selectedId:number|null;
+
+    initializeQuestions:(questions:Question[]) => void;
     selectChoice:(id:number) => void;
     submitRating:(rating:Rating,question:Question) => void;
     restart:() => void;
@@ -14,10 +17,12 @@ type QuizState = {
 export const useQuizStore = create<QuizState>()(
     persist(
         (set,get) => ({
+    questions:[],
     currentIndex:0,
     records: [],
     selectedId:null,
     selectChoice:(id) => set({selectedId:id}),
+    initializeQuestions:(questions) =>set({ questions }),
     submitRating:(rating,question) =>{
         const {selectedId} = get();
         if(selectedId === null) return;
@@ -35,13 +40,15 @@ export const useQuizStore = create<QuizState>()(
         }));
     },
 
-    restart:()=> set({currentIndex:0,records:[],selectedId:null}),
+    restart:()=> set({questions:[], currentIndex:0,records:[],selectedId:null}),
 }),
 {
       name: "quiz-storage",
       partialize:(state) => ({
+        questions: state.questions,
         records: state.records,
         currentIndex: state.currentIndex,
+        selectedId: state.selectedId,
       }),
     }
   )

@@ -23,13 +23,12 @@ export function createQuestions(cards: Card[]): Question[] {
             ...selectedWrong,
         ]);
         const choices: Five<Choice> = options.map(
-            (item, index) => ({
-                id: index + 1,
+            (item) => ({
+                id: item.id,
                 text: item.thai,
             })
         ) as Five<Choice>;
-        const correctChoiceId =
-            options.findIndex((item) => item.id === card.id) + 1;
+        const correctChoiceId = card.id;
         return {
             ...card,
             choices,
