@@ -10,7 +10,11 @@ export async function GET() {
     if(error){
         return NextResponse.json({error: error.message},{status:500});
     }
-    return NextResponse.json(data);
+    const cards = data.map((row) => ({
+        ...row,
+        example:row.example ?? undefined,
+    }));
+    return NextResponse.json(cards);
 }
 export async function POST(request: Request) {
   try {
