@@ -2,7 +2,6 @@
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useQuizStore } from "@/store/quizStore"
-import { questions } from "@/data/questions"
 import { ProgressBar } from "./ProgressBar"
 import { useHydrated } from "@/hook/useHydrated"
 import { useEffect } from "react"
@@ -30,9 +29,9 @@ export function SummaryView() {
         <div className="mx-auto max-w-md p-4">
             <h2 className="text-2xl font-bold">สรุป</h2>
             <p>
-                ถูก {correctCount} จาก {questions.length} ข้อ
+                ถูก {correctCount} จาก {records.length} ข้อ
             </p>
-            <ProgressBar current={correctCount} total={questions.length}/>
+            <ProgressBar current={correctCount} total={records.length}/>
             <div className="mt-6 flex gap-2">
                 <button type="button" onClick={handleAgain} className="rounded-lg border bg-white px-4 py-2 transition hover:bg-gray-100 active:scale-95">
                     เล่นอีกครั้ง
