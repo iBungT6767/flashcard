@@ -19,7 +19,7 @@ export function QuizGame() {
     const router = useRouter();
     const hydrated = useHydrated();
     useEffect(() => {
-        let canclled = false;
+        let cancelled = false;
         async function fetchCards() {
             try {
                 const response = await fetch("/api/cards");
@@ -28,11 +28,11 @@ export function QuizGame() {
                 }
                 const data: Card[] = await response.json();
                 const generatedQuestions = createQuestions(data);
-                if(!canclled){
+                if(!cancelled){
                     setQuestions(generatedQuestions);
                 }
             } catch (error) {
-                if(canclled){
+                if(!cancelled){
                      setError(
                     error instanceof Error
                         ? error.message
@@ -40,14 +40,14 @@ export function QuizGame() {
                 );
                 }
             } finally {
-                if(canclled){
+                if(!cancelled){
                     setLoading(false);
                 }
             }
         }
         fetchCards();
         return () => {
-            canclled = true;
+            cancelled = true;
         };
     }, []);
     useEffect(() => {
