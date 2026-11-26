@@ -70,11 +70,6 @@ export default function SingupPage(){
                     เข้าสู้ระบบ
                     </Link>
                 </p>
-                <p className="text-center">
-                    <Link href="/" className="text-blue-600 hover:underline">
-                    กลับหน้าแรก
-                    </Link>
-                </p>
             </form>
         </main>
     );
