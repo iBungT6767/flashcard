@@ -2,6 +2,7 @@
 import { SubmitEvent,useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabaseBrowser } from "@/lib/supabase-browser";
+import Link from "next/link";
 
 export default function LoginPage() {
     const router = useRouter();
@@ -25,7 +26,7 @@ export default function LoginPage() {
         setEmail("อีเมลหรือรหัสผ่านไม่ถูกต้อง");
         return;
        }
-       router.replace("/");
+       router.replace("/home");
        router.refresh();
     }
     return (
@@ -50,6 +51,10 @@ export default function LoginPage() {
                 <button type="submit" disabled={loading} className="w-full rounded-lg bg-blue-600 px-4 py-3 text-white transition hover:bg-blue-700 disabled:opacity-50">
                     {loading ? "กำลังเข้าสู่ระบบ..." : "เข้าสู่ระบบ"}
                 </button>
+                <p className="text-center text-sm">
+                    ยังไม่มีบัญชี{""}
+                    <Link href="/signup" className="text-blue-600 hover:underline">สมัครสมาชิก</Link>
+                </p>
             </form>
         </main>
     );
