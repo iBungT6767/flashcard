@@ -14,7 +14,7 @@ export function SummaryView() {
 
     useEffect(() => {
         if(hydrated && records.length === 0){
-            router.replace("/");
+            router.replace("/home");
         }
     },[hydrated,records,router])
 
@@ -36,7 +36,7 @@ export function SummaryView() {
                 <button type="button" onClick={handleAgain} className="rounded-lg border bg-white px-4 py-2 transition hover:bg-gray-100 active:scale-95">
                     เล่นอีกครั้ง
                 </button>
-                <Link href="/" className="rounded-lg border bg-white px-4 py-2 transition hover:bg-gray-100 active:scale-95">
+                <Link href="/home" className="rounded-lg border bg-white px-4 py-2 transition hover:bg-gray-100 active:scale-95">
                     กลับหน้าแรก
                 </Link>
             </div>
