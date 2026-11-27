@@ -9,10 +9,13 @@ export function shuffle<T>(items: T[]): T[] {
     return result;
 }
 
-export function createQuestions(cards: Card[]): Question[] {
+export function createQuestions(cards: Card[],averageByCard: Record<number,number> = {}): Question[] {
     if (cards.length < 5) {
         return [];
     }
+    const orderedCard = [...cards].sort(
+        (a,b) => (averageByCard[b.id] ?? 0) - (averageByCard[a.id] ?? 0)
+    );
     return cards.map((card) => {
         const wrongCards = cards.filter(
             (item) => item.id !== card.id
