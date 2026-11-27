@@ -10,7 +10,7 @@ export default function NewCardPage() {
         </h1>
         <AddCardForm />
         <Link
-        href="/"
+        href="/home"
         className="mt-4 block text-center text-blue-600"
         >
         กลับหน้าแรก

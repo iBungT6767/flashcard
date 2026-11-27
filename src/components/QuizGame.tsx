@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import type { Card, Question, Rating } from "@/types";
+import type { Card, Rating } from "@/types";
 import { QuestionCard } from "./QuestionCard";
 import { RatingButton } from "./RatingButtons";
 import { ProgressBar } from "./ProgressBar";
@@ -14,38 +14,34 @@ export function QuizGame() {
     const initializeQuestions = useQuizStore(
         (s) => s.initializeQuestions
     );
+    const hydrated = useHydrated();
     const [loading, setLoading] = useState(true);
+    const isLoading = !hydrated || (loading && questions.length === 0);
     const [error, setError] = useState<string | null>(null);
     const currentIndex = useQuizStore((s) => s.currentIndex);
     const selectedId = useQuizStore((s) => s.selectedId);
     const submitRating = useQuizStore((s) => s.submitRating);
     const router = useRouter();
-    const hydrated = useHydrated();
+
     useEffect(() => {
-        if (!hydrated) return;
-        if (questions.length > 0) {
-            setLoading(false);
-            return;
-        }
+        if (!hydrated || questions.length) return;
     let cancelled = false;
     async function fetchCards() {
     try {
-        setLoading(true);
-        setError(null);
         const response = await fetch("/api/cards");
         if (!response.ok) {
             throw new Error("ไม่สามารถดึงข้อมูลคำศัพท์ได้");
         }
         const data: Card[] = await response.json();
-      const generatedQuestions = createQuestions(data);
+        const generatedQuestions = createQuestions(data);
       if (!cancelled) {
         initializeQuestions(generatedQuestions);
       }
-    } catch (error) {
+    } catch (err) {
         if (!cancelled) {
             setError(
-            error instanceof Error
-            ? error.message
+            err instanceof Error
+            ? err.message
             : "เกิดข้อผิดพลาด"
             );
         }
@@ -70,7 +66,7 @@ export function QuizGame() {
             router.push("/summary");
         }
     }, [hydrated, loading, questions.length, currentIndex, router]);
-    if (!hydrated || loading) {
+    if (isLoading) {
         return <p className="p-4 text-center">กำลังโหลดคำศัพท์...</p>;
     }
     if (error) {

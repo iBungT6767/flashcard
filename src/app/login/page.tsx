@@ -23,7 +23,7 @@ export default function LoginPage() {
        });
        setLoading(false);
        if(error){
-        setEmail("อีเมลหรือรหัสผ่านไม่ถูกต้อง");
+        setError("อีเมลหรือรหัสผ่านไม่ถูกต้อง");
         return;
        }
        router.replace("/home");
@@ -52,7 +52,7 @@ export default function LoginPage() {
                     {loading ? "กำลังเข้าสู่ระบบ..." : "เข้าสู่ระบบ"}
                 </button>
                 <p className="text-center text-sm">
-                    ยังไม่มีบัญชี{""}
+                    ยังไม่มีบัญชี{" "}
                     <Link href="/signup" className="text-blue-600 hover:underline">สมัครสมาชิก</Link>
                 </p>
             </form>
