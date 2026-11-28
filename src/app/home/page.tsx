@@ -13,7 +13,7 @@ export default function Home(){
         className="mt-8 inline-block rounded-lg border bg-white px-6 py-3 transition hover:bg-gray-100 active:scale-95"
       >
         เพิ่มคำศัพท์
-      </Link>
+      </Link> <Link href="/study" className="mt-8 inline-block rounded-lg border bg-white px-6 py-3 transition hover:bg-gray-100 active:scale-95"> เรียนคำศัพท์ </Link>
     </div>
       
   </main>
