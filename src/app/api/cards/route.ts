@@ -63,6 +63,14 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+    const { data: dup } = await supabase
+    .from("cards")
+    .select("id")
+    .ilike("english", cleanEnglish)
+    .limit(1);
+    if (dup && dup.length > 0) {
+      return NextResponse.json({ error: "มีคำนี้อยู่แล้ว" }, { status: 409 });
+    }
     const cleanThai = thai.trim();
     if(cleanThai.length > 100 || !/[\u0E01-\u0E2E]/.test(cleanThai)){
       return NextResponse.json({

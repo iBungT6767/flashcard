@@ -1,6 +1,6 @@
 import { StartButton } from "@/components/StartButton"
 import Link from "next/link"
-import LogoutButton from "@/components/LogoutButton";
+import { LogoutButton } from "@/components/LogoutButton"
 
 export default function Home(){
   return<main className="min-h-screen bg-linear-to-b from-amber-100 to-white text-gray-900">

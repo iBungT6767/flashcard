@@ -1,46 +1,21 @@
 "use client";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabaseBrowser } from "@/lib/supabase-browser";
+import { useQuizStore } from "@/store/quizStore";
 
-export default function LogoutButton() {
-    const router = useRouter();
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+export function LogoutButton() {
+  const router = useRouter();
+  const restart = useQuizStore((s) => s.restart);
 
-    async function handleLogout() {
-        setLoading(true);
-        setError(null);
+  const handleLogout = async () => {
+    await supabaseBrowser.auth.signOut();
+    restart();
+    router.replace("/login");
+  };
 
-        const { error } = await supabaseBrowser.auth.signOut();
-
-        setLoading(false);
-
-        if (error) {
-            setError("ออกจากระบบไม่สำเร็จ กรุณาลองอีกครั้ง");
-            return;
-        }
-
-        router.replace("/login");
-        router.refresh();
-    }
-
-    return (
-        <div>
-            <button
-                type="button"
-                onClick={handleLogout}
-                disabled={loading}
-                className="rounded-lg bg-red-600 px-4 py-2 text-white transition hover:bg-red-700 disabled:opacity-50"
-            >
-                {loading ? "กำลังออกจากระบบ..." : "ออกจากระบบ"}
-            </button>
-
-            {error && (
-                <p role="alert" className="mt-2 text-sm text-red-600">
-                    {error}
-                </p>
-            )}
-        </div>
-    );
+  return (
+    <button type="button" onClick={handleLogout} className="rounded-lg border bg-red-500 text-white transition active:scale-95 px-4 py-2">
+      ออกจากระบบ
+    </button>
+  );
 }

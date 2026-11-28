@@ -1,4 +1,5 @@
 import type { Card, Choice, Five, Question,} from "@/types";
+import { pickNextId } from "@/lib/pickNext";
 
 export function shuffle<T>(items: T[]): T[] {
     const result = [...items];
@@ -16,7 +17,7 @@ export function createQuestions(cards: Card[],averageByCard: Record<number,numbe
     const orderedCard = [...cards].sort(
         (a,b) => (averageByCard[b.id] ?? 0) - (averageByCard[a.id] ?? 0)
     );
-    return cards.map((card) => {
+    return orderedCard.map((card) => {
         const wrongCards = cards.filter(
             (item) => item.id !== card.id
         );
@@ -38,4 +39,23 @@ export function createQuestions(cards: Card[],averageByCard: Record<number,numbe
             correctChoiceId,
         };
     });
+}
+export function buildOrder(
+    ids: number[],
+    averages: Record<number, number>,
+    length: number
+): number[] {
+    const order: number[] = [];
+    const remaining = [...ids];
+    let lastId: number | null = null;
+
+    while (order.length < length) {
+    const next = pickNextId(remaining, averages, lastId);
+    if (next === undefined) break;
+    order.push(next);
+    const selectedIndex = remaining.indexOf(next);
+    remaining.splice(selectedIndex, 1);
+    lastId = next;
+    }
+    return order;
 }

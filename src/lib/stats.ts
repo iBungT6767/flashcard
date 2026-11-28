@@ -1,6 +1,8 @@
 import type { AnswerRecord } from "../types/index";
 import { ratingScore } from "../types/index";
 
+type RatingHistory = Pick<AnswerRecord, "cardId" | "rating">;
+
 export function correctRatio (records:AnswerRecord[]): number{
     if(records.length === 0){
         return 0;
@@ -8,9 +10,7 @@ export function correctRatio (records:AnswerRecord[]): number{
     const correctCount = records.filter((r) => r.isCorrect).length;
     return correctCount / records.length;
 }
-export function averageRatingByCard(
-    records:AnswerRecord[]
-): Record<number,number>{
+export function averageRatingByCard(records:RatingHistory[]): Record<number,number>{
     const totals:Record<number,number> = {};
     const counts:Record<number,number> = {}; 
     for (const record of records) {

@@ -17,10 +17,7 @@ export async function createSupabaseServerClient() {
             cookiesToSet.forEach(({ name, value, options }) => {
               cookieStore.set(name, value, options);
             });
-          } catch {
-            // บางบริบทของ Next.js ไม่อนุญาตให้เขียน cookies
-            // จึงปล่อยให้ middleware/proxy จัดการ refresh session แทน
-          }
+          } catch{}
         },
       },
     }
