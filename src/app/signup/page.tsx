@@ -2,8 +2,10 @@
 import Link from "next/link";
 import { useState,type SubmitEvent } from "react";
 import { supabaseBrowser } from "@/lib/supabase-browser";
+import { useRouter } from "next/navigation";
 
-export default function SingupPage(){
+export default function SignupPage(){
+    const router = useRouter();
     const[email,setEmail] = useState("");
     const[password,setPassword] = useState("");
     const[message,setMessage] = useState<string | null>(null);
@@ -30,9 +32,8 @@ export default function SingupPage(){
         }
 
         if(data.session){
-            setMessage("สมัครสมาชิกสำเร็จ สามารถเข้าสู่ระบบได้แล้ว");
-        }else{
-            setMessage("สมัครสมาชิกสำเร็จ กรุณาตรวจสอบอีเมลเพื่อยืนยันบัญชี");
+            router.replace("/home");
+            return;
         }
     }
     return(
@@ -45,13 +46,13 @@ export default function SingupPage(){
                     <label htmlFor="email" className="mb-1 block">
                         Email
                     </label>
-                    <input id="email" type="email" autoCapitalize="email" required value={email} onChange={(event) => setEmail(event.target.value)} className="w-full rounded-lg border px-3 py-2"/>
+                    <input id="email" type="email" autoComplete="email" required value={email} onChange={(event) => setEmail(event.target.value)} className="w-full rounded-lg border px-3 py-2"/>
                 </div>
                 <div>
                     <label htmlFor="password" className="mb-1 block">
                         Password
                     </label>
-                    <input id="password" type="password" autoCapitalize="new-password" minLength={6} required value={password} onChange={(event) => setPassword(event.target.value)} className="w-full rounded-lg border px-3 py-2"/>
+                    <input id="password" type="password" autoComplete="new-password" minLength={6} required value={password} onChange={(event) => setPassword(event.target.value)} className="w-full rounded-lg border px-3 py-2"/>
                     <p className="mt-1 text-sm text-gray-500">
                         รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร
                     </p>
@@ -67,7 +68,7 @@ export default function SingupPage(){
                 </button>
                 <p className="text-center text-sm">มีบัญชีแล้ว{""}
                     <Link href="/login" className="text-blue-600 hover:underline">
-                    เข้าสู้ระบบ
+                    เข้าสู่ระบบ
                     </Link>
                 </p>
             </form>

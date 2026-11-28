@@ -1,15 +1,12 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 export function AddCardForm(){
-    const router = useRouter();
-
     const [english,setEnglish] = useState("");
     const [thai,setThai] = useState("");
     const [difficulty,setDifficulty] = useState("1");
     const [example,setExample] = useState("");
-
+    const [success, setSuccess] = useState("");
     const [loading,setLoading] = useState(false);
     const [error,setError] = useState("");
 
@@ -17,6 +14,7 @@ export function AddCardForm(){
         event.preventDefault();
         setLoading(true);
         setError("");
+        setSuccess("");
         try {
             const response = await fetch("/api/cards",{
                 method:"POST",
@@ -34,18 +32,22 @@ export function AddCardForm(){
             if(!response.ok){
                 throw new Error(data.error || "เพิ่มศัพท์ไม่สำเร็จ");
             }
-            router.push("/");
-            router.refresh();
-        }catch (error) {
+            setEnglish("");
+            setThai("");
+            setDifficulty("1");
+            setExample("");
+            setSuccess(`เพิ่ม "${data.english}" เรียบร้อยแล้ว`);
+        }catch (err) {
             setError(
-                error instanceof Error
-                ?error.message
+                err instanceof Error
+                ?err.message
                 :"เกิดข้อผิดพลาด"
             );
         }finally{
             setLoading(false);
         }
     }
+    
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
             <div>
@@ -78,9 +80,9 @@ export function AddCardForm(){
                     onChange={(event) => setDifficulty(event.target.value)}
                     className="w-full rounded-lg border p-3"
                 >
-                    <option value="1">1-ง่ายมาก</option>
-                    <option value="2">2-ง่าย</option>
-                    <option value="3">3-ปานกลาง</option>
+                    <option value="1">1 - ง่ายมาก</option>
+                    <option value="2">2 - ง่าย</option>
+                    <option value="3">3 - ปานกลาง</option>
                     <option value="4">4 - ยาก</option>
                     <option value="5">5 - ยากมาก</option>
                 </select>
@@ -98,6 +100,7 @@ export function AddCardForm(){
             {error && (
                 <p className="text-sm text-red-500">{error}</p>
             )}
+            {success && <p role="status" className="text-sm text-green-700">{success}</p>}
             <button
                 type="submit"
                 disabled={loading}
@@ -106,5 +109,7 @@ export function AddCardForm(){
                 {loading ? "กำลังบันทึก..." : "เพิ่มคำศัพท์"}
             </button>
         </form>
+        
     );
+    
 }

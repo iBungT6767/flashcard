@@ -40,4 +40,11 @@ export type QuestionLoadState =
 | {status:"loading"}
 | {status:"error"}
 | {status:"ok";questions:Question[]};
+export const ratingScore: Record<Rating, number> = {
+  "very easy": 1,
+  easy: 2,
+  medium: 3,
+  hard: 4,
+  "very hard": 5,
+};
 
