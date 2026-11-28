@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import type { Card } from "@/types";
 import { StudyDeck } from "@/components/StudyDeck";
+import Link from "next/link";
 
 export default function StudyPage() {
     const [cards, setCards] = useState<Card[]>([]);
@@ -35,6 +36,12 @@ export default function StudyPage() {
             <h1 className="m-4 text-center text-2xl font-bold">
                 Flash Card app
             </h1>
+            <h1 className="mx-auto p-4 text-center"><Link
+            href="/home"
+            className="mt-8 text-center rounded-lg border bg-white px-6 py-3 transition hover:bg-gray-100 active:scale-95"
+            >
+            กลับหน้าแรก
+            </Link></h1>
             {loading ? (
                 <p className="p-4 text-center">กำลังโหลดคำศัพท์...</p>
             ) : error ? (
